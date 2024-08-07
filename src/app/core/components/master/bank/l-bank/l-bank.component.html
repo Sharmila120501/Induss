@@ -1,0 +1,56 @@
+<div
+  x-data="{ 
+    tableItems: [
+        { avatar: 'https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ', name: 'Liam James', email: 'liamjames@example.com', phone_nimber: '+1 (555) 000-000', position: 'Software engineer', salary: '$100K' },
+        { avatar: 'https://randomuser.me/api/portraits/men/86.jpg', name: 'Olivia Emma', email: 'oliviaemma@example.com', phone_nimber: '+1 (555) 000-000', position: 'Product designer', salary: '$90K' },
+        { avatar: 'https://randomuser.me/api/portraits/women/79.jpg', name: 'William Benjamin', email: 'william.benjamin@example.com', phone_nimber: '+1 (555) 000-000', position: 'Front-end developer', salary: '$80K' },
+        { avatar: 'https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg', name: 'Henry Theodore', email: 'henrytheodore@example.com', phone_nimber: '+1 (555) 000-000', position: 'Laravel engineer', salary: '$120K' },
+        { avatar: 'https://images.unsplash.com/photo-1439911767590-c724b615299d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ', name: 'Amelia Elijah', email: 'amelia.elijah@example.com', phone_nimber: '+1 (555) 000-000', position: 'Open source manager', salary: '$75K' }
+    ]
+}"
+  class="mx-auto ml-60 mt-4 max-w-screen-xl px-4 md:px-8"
+>
+  <div class="items-start justify-between md:flex">
+    <div class="max-w-lg">
+      <h3 class="text-xl font-bold text-gray-800 sm:text-2xl">Bank List</h3>
+    </div>
+    <div class="mt-3 md:mt-0">
+      <a
+        routerLink="/home/addbank"
+        class="inline-block rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white duration-150 hover:bg-indigo-500 active:bg-indigo-700 md:text-sm"
+        >Add New Bank</a
+      >
+    </div>
+  </div>
+  <div class="mt-12 rounded-lg border shadow-sm">
+    <table class="w-full table-auto text-left text-sm">
+      <thead class="border-b bg-gray-50 font-medium text-gray-600">
+        <tr class="">
+          <th class="px-6 py-3">s.no</th>
+          <th class="px-6 py-3">bank Name</th>
+          <th class="px-6 py-3">Account No</th>
+          <th class="px-6 py-3">Bank Branch</th>
+          <th class="px-6 py-3">IFSC code</th>
+          <th class="px-6 py-3 text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y text-gray-600">
+        <tr>
+          <td #id class="items-center gap-x-3 whitespace-nowrap px-6 py-3"></td>
+          <td class="items-center gap-x-3 whitespace-nowrap px-6 py-3"></td>
+          <td class="whitespace-nowrap px-6 py-4"></td>
+          <td class="whitespace-nowrap px-6 py-4" x-text="item.position"></td>
+          <td class="whitespace-nowrap px-6 py-4"></td>
+
+          <td class="whitespace-nowrap px-6 text-center">
+            <button
+              class="rounded-lg px-3 py-2 font-medium text-indigo-600 duration-150 hover:bg-gray-50 hover:text-indigo-500"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

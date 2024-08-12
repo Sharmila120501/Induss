@@ -10,6 +10,9 @@ export class HeaderComponent {
 
   toggleSetting() {
     this.profile = !this.profile;
+    setTimeout(() => {
+      this.profile = false;
+    }, 5000);
   }
   signOut() {}
 }

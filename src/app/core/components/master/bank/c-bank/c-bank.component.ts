@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BankService } from '../../../../services/bank.service';
 
 @Component({
   selector: 'app-c-bank',
@@ -8,38 +9,70 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CBankComponent {
   addBankForm: FormGroup;
-  isShippingEnabled: boolean = false;
-  successToster: boolean = false;
-  message: string = '';
 
-  constructor(private fb1: FormBuilder) {
-    this.addBankForm = this.fb1.group({
-      comId: [],
-      accountNumber: [
-        '',
-        [Validators.required, Validators.pattern('[A-Za-z ]+')],
-      ],
-      confirmAccount: [
-        '',
-        [Validators.required, Validators.pattern('[A-Za-z ]+')],
-      ],
-      ifsc: ['', [Validators.required, Validators.pattern(/^[1-9][0-9]{9}$/)]],
-      bankName: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^[a-zA-Z0-9._%+-]+@[a-z]+.([a-z]{2})+(?:\.(com|in|edu|net)){1}$/
-          ),
+  constructor(private fb1: FormBuilder, private bankservice: BankService) {
+    this.addBankForm = this.fb1.group(
+      {
+        companyId: [sessionStorage.getItem('companyId')],
+        accountNo: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^-?\d*\.?\d+$/),
+            Validators.minLength(8),
+            Validators.maxLength(15),
+          ],
         ],
-      ],
-      branchName: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[A-Z\d]{2}$/),
+        confirmAccount: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.maxLength(15),
+          ],
         ],
-      ],
+        ifscCode: [
+          '',
+          [Validators.required, Validators.pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/)],
+        ],
+        bankName: ['', [Validators.required, Validators.pattern('[A-Za-z ]+')]],
+        branchName: [
+          '',
+          [Validators.required, Validators.pattern('[A-Za-z ]+')],
+        ],
+      },
+      { validator: this.confirmAccountNumberValidator }
+    );
+  }
+  addBank(data: any) {
+    console.log(data);
+    let comId = sessionStorage.getItem('companyId');
+    this.bankservice.addbank(comId, data).subscribe((res) => {
+      console.log(res);
     });
+    this.addBankForm.reset();
+  }
+
+  BANK: string = '';
+  BRANCH: string = '';
+  _ifscfetch: any;
+  fetchIfscCode(data: any) {
+    const ifscCode = this.addBankForm.get('ifscCode')?.value;
+    console.log(ifscCode);
+    this.bankservice.fetchIfsc(ifscCode).subscribe((res) => {
+      console.log(res);
+      this._ifscfetch = res;
+
+      this.addBankForm.patchValue({
+        bankName: this._ifscfetch.BANK,
+        branchName: this._ifscfetch.BRANCH,
+      });
+    });
+  }
+  confirmAccountNumberValidator(group: FormGroup) {
+    const accountNo = group.get('accountNo')?.value;
+    const conAccountNo = group.get('confirmAccount')?.value;
+
+    return accountNo === conAccountNo ? null : { mismatch: true };
   }
 }

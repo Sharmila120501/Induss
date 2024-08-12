@@ -5,25 +5,33 @@
       class="flex flex-col items-center justify-center border bg-gray-50 rounded-l-lg p-5 shadow-lg max-w-[800px]"
     >
       <div class="text-center mb-4">
-        <h1 class="text-3xl font-bold text-black">Hello, Welcome!</h1>
+        <h1 class="text-3xl font-bold font-headingfont text-black">
+          Hello, Induss!
+        </h1>
       </div>
-      <form class="w-full mx-20 my-10">
+      <form [formGroup]="SigninForm" class="w-full mx-20 my-10">
         <div class="mb-4">
-          <label for="email" class="block text-gray-700">Email address</label>
+          <label for="email" class="block font-contentFont text-gray-700"
+            >Email address</label
+          >
           <input
             type="email"
             id="email"
+            formControlName="companyEmail"
             placeholder="name@gmail.com"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+            class="w-full px-4 py-2 border font-contentFont rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
           />
         </div>
         <div class="mb-4">
-          <label for="password" class="block text-gray-700">Password</label>
+          <label for="password" class="block font-contentFont text-gray-700"
+            >Password</label
+          >
           <input
             type="password"
             id="password"
+            formControlName="password"
             placeholder="********"
-            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+            class="w-full px-4 py-2 font-contentFont border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
           />
         </div>
         <!-- <div class="flex items-center justify-between mb-6">
@@ -37,7 +45,7 @@
       </div> -->
         <div class="flex space-x-4">
           <button
-            routerLink="/home"
+            (click)="signin(SigninForm.value)"
             type="button"
             class="w-full py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 bg-opacity-80"
           >
@@ -61,8 +69,10 @@
         alt="Logo"
         class="mb-4 h-20"
       />
-      <h2 class="text-4xl font-bold mb-4">Welcome to Our Platform</h2>
-      <p class="text-left">
+      <h2 class="text-4xl font-bold mb-4 font-headingfont">
+        Welcome to Our Platform
+      </h2>
+      <p class="text-left font-contentFont">
         Join us to experience the best services and opportunities. Let’s start
         your journey today. Join us to experience the best services and
         opportunities. Let’s start your journey today.

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomerService } from '../../../../services/customer.service';
+import { SharedService } from '../../../../services/shared.service';
 
 @Component({
   selector: 'app-c-customer',
@@ -12,19 +14,25 @@ export class CCustomerComponent {
   successToster: boolean = false;
   message: string = '';
 
-  constructor(private fb1: FormBuilder) {
+  constructor(
+    private fb1: FormBuilder,
+    private customerService: CustomerService,
+    private shared: SharedService
+  ) {
     this.addcustomerForm = this.fb1.group({
-      comId: [],
-      cusName: ['', [Validators.required, Validators.pattern('[A-Za-z ]+')]],
-      cusConPerson: [
+      customerName: [
         '',
         [Validators.required, Validators.pattern('[A-Za-z ]+')],
       ],
-      cusConPhone: [
+      contactPerson: [
+        '',
+        [Validators.required, Validators.pattern('[A-Za-z ]+')],
+      ],
+      contactPhone: [
         '',
         [Validators.required, Validators.pattern(/^[1-9][0-9]{9}$/)],
       ],
-      cusEmail: [
+      contactEmail: [
         '',
         [
           Validators.required,
@@ -33,53 +41,74 @@ export class CCustomerComponent {
           ),
         ],
       ],
-      cusGst: [
+      customerGst: [
         '',
         [
           Validators.required,
           Validators.pattern(/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[A-Z\d]{2}$/),
         ],
       ],
-      cusBillAndShip: ['', [Validators.required]],
-      cusBAdd1: ['', [Validators.required]],
-      cusBAdd2: ['', [Validators.required]],
-      cusSAdd1: ['', [Validators.required]],
-      cusSAdd2: ['', [Validators.required]],
-      cusBPcode: [
-        '',
-        [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)],
-      ],
-      cusSPcode: [
-        '',
-        [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)],
-      ],
-      cusBCity: ['', [Validators.required]],
-      cusSCity: ['', [Validators.required]],
-      cusBState: ['', [Validators.required]],
-      cusSState: ['', [Validators.required]],
+      addresses: this.fb1.array([this.showaddress()]),
     });
   }
+  get addresses() {
+    return this.addcustomerForm.get('addresses') as FormArray;
+  }
+  showaddress() {
+    return this.fb1.group({
+      statusCode: ['', [Validators.required]],
+      billingAddress1: ['', [Validators.required]],
+      billingAddress2: ['', [Validators.required]],
+      shippingAddress1: ['', [Validators.required]],
+      shippingAddress2: ['', [Validators.required]],
+      billingPincode: [
+        '',
+        [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)],
+      ],
+      shippingPincode: [
+        '',
+        [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)],
+      ],
+      billingCity: ['', [Validators.required]],
+      shippingCity: ['', [Validators.required]],
+      billingState: ['', [Validators.required]],
+      shippingState: ['', [Validators.required]],
+    });
+  }
+  addAddress() {
+    this.addresses.push(this.showaddress());
+  }
 
-  onRadioChange(optionValue: string) {
+  onRadioChange(optionValue: string, index: number) {
+    const addressGroup = this.addresses.at(index) as FormGroup;
+
     if (optionValue === '400') {
       this.isShippingEnabled = true;
-      this.addcustomerForm.patchValue({
-        cusSAdd1: '',
-        cusSAdd2: '',
-        cusSPcode: '',
-        cusSCity: '',
-        cusSState: '',
+      addressGroup.patchValue({
+        shippingAddress1: '',
+        shippingAddress2: '',
+        shippingPincode: '',
+        shippingCity: '',
+        shippingState: '',
       });
     }
     if (optionValue === '200') {
       this.isShippingEnabled = true;
-      this.addcustomerForm.patchValue({
-        cusSAdd1: this.addcustomerForm.value.cusBAdd1,
-        cusSAdd2: this.addcustomerForm.value.cusBAdd2,
-        cusSPcode: this.addcustomerForm.value.cusBPcode,
-        cusSCity: this.addcustomerForm.value.cusBCity,
-        cusSState: this.addcustomerForm.value.cusBState,
+      addressGroup.patchValue({
+        shippingAddress1: addressGroup.value.billingAddress1,
+        shippingAddress2: addressGroup.value.billingAddress2,
+        shippingPincode: addressGroup.value.billingPincode,
+        shippingCity: addressGroup.value.billingCity,
+        shippingState: addressGroup.value.billingState,
       });
     }
+  }
+
+  AddCustomer(data: any) {
+    console.log(data);
+
+    this.customerService.addCustomer(data).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

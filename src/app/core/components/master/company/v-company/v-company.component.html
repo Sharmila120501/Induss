@@ -1,0 +1,143 @@
+<section class="bg-gray-100">
+  <div class="p-4 sm:ml-64">
+    <div class="rounded-lg bg-white p-4">
+      <div class="flex h-12 items-end justify-between">
+        <h1 class="mb-4 text-xl">Company Details</h1>
+        <button
+          routerLink="/home/addcompany"
+          class="rounded-lg bg-blue-600 p-2 text-white"
+        >
+          Add & Update Company
+        </button>
+      </div>
+
+      <!-- Display company details -->
+      <div
+        class="mt-4 flow-root rounded-lg border border-gray-100 py-3 shadow-sm"
+      >
+        <dl class="-my-3 divide-y divide-gray-100 text-sm">
+          <!-- Display individual company details -->
+          <div
+            class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+          >
+            <dt class="font-medium text-gray-900">Company Logo:</dt>
+            <dd class="text-gray-700 sm:col-span-2">
+              <img alt="Image Preview" class="h-20 w-32" />
+            </dd>
+          </div>
+          <div *ngFor="let com of _companyList">
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Login Email:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ _companyList.emailId }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Company Name:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.companyName }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Company Email:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.companyEmail }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">GST Number:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.companyGst }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">PAN Number:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.companyPan }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Contact Person Name:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.contactPerson }}
+              </dd>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">
+                Contact Person Phone Number:
+              </dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.contactPhone }}
+              </dd>
+            </div>
+
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Company Website:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                {{ com.companyUrl }}
+              </dd>
+            </div>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Display address section if addresses are available -->
+
+      <div class="mt-4 rounded-lg bg-white p-4">
+        <h1 class="mb-4 text-xl">Company Address</h1>
+
+        <div class="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
+          <dl class="-my-3 divide-y divide-gray-100 text-sm">
+            <!-- Loop through each address in compAddress array -->
+            <div *ngFor="let com of _addressList">
+              <div
+                class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+              >
+                <dt class="font-medium text-gray-900">Address:</dt>
+                <dd class="text-gray-700 sm:col-span-2">
+                  {{ com.companyAddress1 }}<br />
+                  {{ com.comBAdd1 }}<br />
+                  {{ com.comBAdd2 }}<br />
+                  {{ com.comBCity }}<br />
+                  {{ com.comBState }}
+                </dd>
+              </div>
+              <div
+                class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+              >
+                <dt class="font-medium text-gray-900">Pincode:</dt>
+                <dd class="text-gray-700 sm:col-span-2">
+                  {{ com.comBPcode }}
+                </dd>
+              </div>
+            </div>
+            <div
+              class="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+            >
+              <dt class="font-medium text-gray-900">Signature:</dt>
+              <dd class="text-gray-700 sm:col-span-2">
+                <img alt="Image Preview" class="h-28 w-32" />
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

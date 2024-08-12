@@ -10,43 +10,27 @@ import { CompanyService } from '../../../../services/company.service';
 })
 export class CCompanyComponent {
   addcompany: FormGroup;
-  addlogo: FormGroup;
-  addSign: FormGroup;
-  selectedFile: File | null = null;
-  selectedSignature: File | null = null;
-  previewUrl: string | ArrayBuffer | null = null;
-  previewUrl1: string | ArrayBuffer | null = null;
-  signaturePreviewUrl: string | ArrayBuffer | null = null;
-  isShippingEnabled: boolean = false;
-  message: string = '';
-  successToster: boolean = false;
-  imageData: any;
-  imageUrl: any;
-
-  isDeleteAddress: boolean = true;
-  isSaveAddress: boolean = false;
-
-  _viewCompany: any;
+  addAddress: FormGroup;
 
   constructor(
     private fb1: FormBuilder,
-    private ser: CompanyService,
-    private shared: SharedService
+    private companyService: CompanyService
   ) {
-    this.addlogo = this.fb1.group({
-      comLogo: [null, Validators.required],
+    this.addAddress = this.fb1.group({
+      companyId: [],
+      companyAddress1: [],
+      companyAddress2: [],
+      companyPincode: [],
+      companyCity: [],
+      companyState: [],
     });
-    this.addSign = this.fb1.group({
-      comSignature: [null, Validators.required],
-    });
-
     this.addcompany = this.fb1.group({
-      emailId: [
-        { value: '', disabled: true },
-        [Validators.required, Validators.email],
+      companyId: [],
+      companyName: [
+        '',
+        [Validators.required, Validators.pattern('[A-Za-z ]+')],
       ],
-      comName: ['', [Validators.required, Validators.pattern('[A-Za-z ]+')]],
-      comEmail: [
+      companyEmail: [
         '',
         [
           Validators.required,
@@ -56,60 +40,39 @@ export class CCompanyComponent {
         ],
       ],
 
-      comLandLine: [],
-      comGst: [
+      companyGst: [
         '',
         [
           Validators.required,
           Validators.pattern(/^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[A-Z\d]{2}$/),
         ],
       ],
-      comPan: [
+      companyPan: [
         '',
         [Validators.required, Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)],
       ],
-      comConPerson: [
+      contactPerson: [
         '',
         [Validators.required, Validators.pattern('[A-Za-z ]+')],
       ],
-      comConPhone: [
+      contactPhone: [
         '',
         [Validators.required, Validators.pattern(/^[1-9][0-9]{9}$/)],
       ],
-      comUrl: [],
-
-      companyAddressDto: this.fb1.array([this.showaddress()]),
+      companyUrl: [],
     });
   }
 
-  get companyAddressDto() {
-    return this.addcompany.get('companyAddressDto') as FormArray;
-  }
-  showaddress() {
-    return this.fb1.group({
-      comBAdd1: ['', [Validators.required]],
-      comBAdd2: ['', [Validators.required]],
-
-      comBPcode: [
-        '',
-        [Validators.required, Validators.pattern(/^[1-9][0-9]{5}$/)],
-      ],
-
-      comBCity: ['', Validators.required],
-
-      comBState: ['', Validators.required],
+  AddCompany(data: any) {
+    let comId = sessionStorage.getItem('companyId');
+    this.companyService.addcompany(comId, data).subscribe((res) => {
+      console.log(res);
     });
   }
-  addAddress() {
-    this.companyAddressDto.push(this.showaddress());
-  }
-
-  SubmitCompany(data: any) {
-    console.log(data);
-  }
-
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
+  AddAddress(data: any) {
+    let comId = sessionStorage.getItem('companyId');
+    this.companyService.addaddress(comId, data).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

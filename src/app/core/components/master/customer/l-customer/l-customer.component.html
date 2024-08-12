@@ -8,56 +8,56 @@
         { avatar: 'https://images.unsplash.com/photo-1439911767590-c724b615299d?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ', name: 'Amelia Elijah', email: 'amelia.elijah@example.com', phone_nimber: '+1 (555) 000-000', position: 'Open source manager', salary: '$75K' }
     ]
 }"
-  class="mx-auto ml-60 mt-4 max-w-screen-xl px-4 md:px-8"
+  class="max-w-screen-xl mx-auto px-4 md:px-8 ml-60 mt-4"
 >
   <div class="items-start justify-between md:flex">
     <div class="max-w-lg">
-      <h3
-        class="text-xl ml-2 font-bold font-headingfont text-gray-800 sm:text-2xl"
-      >
-        Bank List
+      <h3 class="text-gray-800 text-xl font-bold font-headingfont sm:text-2xl">
+        Customer List
       </h3>
     </div>
     <div class="mt-3 md:mt-0">
       <a
-        routerLink="/home/addbank"
-        class="inline-block rounded-lg font-headingfont bg-indigo-600 px-4 py-2 font-medium text-white duration-150 hover:bg-indigo-500 active:bg-indigo-700 md:text-sm"
-        >Add New Bank</a
+        routerLink="/home/addcustomer"
+        class="inline-block px-4 py-2 text-white duration-150 font-medium bg-indigo-600 rounded-lg hover:bg-indigo-500 active:bg-indigo-700 md:text-sm font-contentFont"
+        >Add Customer</a
       >
     </div>
   </div>
-  <div class="mt-12 rounded-lg border shadow-sm">
-    <table class="w-full table-auto text-left text-sm">
-      <thead class="border-b bg-gray-50 font-medium text-gray-600">
+  <div class="mt-12 shadow-sm border rounded-lg">
+    <table class="w-full table-auto text-sm text-left">
+      <thead class="bg-gray-50 text-gray-600 font-medium border-b">
         <tr class="">
-          <th class="px-6 py-3 font-contentFont">s.no</th>
-          <th class="px-6 py-3 font-contentFont">Account No</th>
-          <th class="px-6 py-3 font-contentFont">Bank Name</th>
-          <th class="px-6 py-3 font-contentFont">Branch Name</th>
-          <th class="px-6 py-3 font-contentFont">IFSC code</th>
-          <th class="px-6 py-3 text-center font-contentFont">Action</th>
+          <th class="py-3 px-6 font-headingfont">s.no</th>
+          <th class="py-3 px-6 font-headingfont">Customer Name</th>
+          <th class="py-3 px-6 font-headingfont">Contact Person Name</th>
+          <th class="py-3 px-6 font-headingfont">Contact Person MobileNo</th>
+          <th class="py-3 px-6 font-headingfont">Contact Person Email</th>
+          <th class="py-3 px-6 text-center font-headingfont">Action</th>
         </tr>
       </thead>
       <tbody
-        *ngFor="let listOf of _bankList; let i = index"
-        class="divide-y text-gray-600"
+        *ngFor="let listOf of _customerList; let i = index"
+        class="text-gray-600 divide-y"
       >
         <tr>
-          <td #id class="items-center gap-x-3 whitespace-nowrap px-6 py-3">
+          <td #vId class="items-center gap-x-3 py-3 px-6 whitespace-nowrap">
             {{ i + 1 }}
           </td>
-          <td class="items-center gap-x-3 whitespace-nowrap px-6 py-3">
-            {{ listOf.accountNo }}
+          <td class="items-center gap-x-3 py-3 px-6 whitespace-nowrap">
+            {{ listOf.customerName }}
           </td>
-          <td class="whitespace-nowrap px-6 py-4">{{ listOf.bankName }}</td>
-          <td class="whitespace-nowrap px-6 py-4" x-text="item.position">
-            {{ listOf.branchName }}
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ listOf.contactPerson }}
           </td>
-          <td class="whitespace-nowrap px-6 py-4">{{ listOf.ifscCode }}</td>
+          <td class="px-6 py-4 whitespace-nowrap" x-text="item.position">
+            {{ listOf.contactPhone }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ listOf.contactEmail }}</td>
 
-          <td class="whitespace-nowrap px-6 text-center">
+          <td class="text-center px-6 whitespace-nowrap">
             <button
-              class="rounded-lg px-3 py-2 font-contentFont font-medium text-indigo-600 duration-150 hover:bg-gray-50 hover:text-indigo-500"
+              class="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg font-contentFont"
             >
               View
             </button>

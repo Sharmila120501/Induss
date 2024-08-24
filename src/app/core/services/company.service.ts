@@ -14,6 +14,7 @@ export class CompanyService {
     return this.http.post(endPonit.addCompany + comId, data);
   }
   getCompany() {
-    return this.http.get(endPonit.getcompany);
+    let comID = sessionStorage.getItem('companyId');
+    return this.http.get(endPonit.getcompany + '/' + comID);
   }
 }

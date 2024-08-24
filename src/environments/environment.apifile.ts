@@ -1,5 +1,5 @@
-let url = 'http://192.168.1.4:8000/';
-let url1 = 'http://192.168.1.4:8001/';
+let url = 'http://192.168.1.6:8000/';
+let url1 = 'http://192.168.1.6:8001/';
 let ifsc = 'https://ifsc.razorpay.com/';
 let pinCode = 'https://api.postalpincode.in/pincode/';
 
@@ -17,6 +17,7 @@ export const endPonit = {
   addCompany: company + '/update/',
   addAddress: address + '/update/',
   getcompany: company + '/all',
+  verify: url + 'Check/',
   //bank
   addBank: bank + '/update/',
   ifsccode: ifsc,

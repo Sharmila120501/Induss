@@ -8,6 +8,8 @@ import { CustomerService } from '../../../../services/customer.service';
 })
 export class LCustomerComponent implements OnInit {
   constructor(private customerservice: CustomerService) {}
+  isCloseUpdate: Boolean = false;
+  customerData: any;
   ngOnInit(): void {
     this.getallCustomer();
   }
@@ -18,5 +20,14 @@ export class LCustomerComponent implements OnInit {
       this._customerList = res;
       console.log(this._customerList);
     });
+  }
+
+  viewCustomer(data: any) {
+    this.isCloseUpdate = true;
+    this.customerData = data;
+  }
+
+  closeUpdate(close: any) {
+    this.isCloseUpdate = close;
   }
 }

@@ -1,23 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedService } from '../../../../services/shared.service';
 import { CompanyService } from '../../../../services/company.service';
+import { Router } from '@angular/router';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-c-company',
   templateUrl: './c-company.component.html',
   styleUrl: './c-company.component.css',
 })
-export class CCompanyComponent {
+export class CCompanyComponent implements OnInit {
   addcompany: FormGroup;
   addAddress: FormGroup;
-
+  ngOnInit(): void {
+    this.fetchCompanyProfile();
+  }
   constructor(
     private fb1: FormBuilder,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private shared: SharedService,
+    private router: Router
   ) {
     this.addAddress = this.fb1.group({
-      companyId: [],
+      companyId: [sessionStorage.getItem('companyId')],
       companyAddress1: [],
       companyAddress2: [],
       companyPincode: [],
@@ -62,12 +68,45 @@ export class CCompanyComponent {
       companyUrl: [],
     });
   }
+  _address: any;
+  fetchCompanyProfile() {
+    this.companyService.getCompany().subscribe((res: any) => {
+      this._viewCompany = res;
+      console.log('CHECK', this._viewCompany);
+
+      this.addcompany.patchValue(this._viewCompany);
+      this._address = this._viewCompany.addresses;
+      console.log(this._address);
+
+      this.addAddress.patchValue(this._address);
+      if (this._address && this._address[0]) {
+        this.addAddress.patchValue({
+          companyAddress1: this._address[0].companyAddress1,
+          companyAddress2: this._address[0].companyAddress2,
+          companyCity: this._address[0].companyCity,
+          companyPincode: this._address[0].companyPincode,
+          companyState: this._address[0].companyState,
+        });
+      }
+    });
+  }
 
   AddCompany(data: any) {
+    console.log(data);
+
     let comId = sessionStorage.getItem('companyId');
-    this.companyService.addcompany(comId, data).subscribe((res) => {
-      console.log(res);
-    });
+    this.companyService.addcompany(comId, data).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (error) => {
+        if (error.status == 200) {
+          this.addcompany.reset();
+
+          this.fetchCompanyProfile();
+        }
+      }
+    );
   }
   AddAddress(data: any) {
     let comId = sessionStorage.getItem('companyId');
@@ -75,4 +114,9 @@ export class CCompanyComponent {
       console.log(res);
     });
   }
+
+  comAddId(comAddId: any) {
+    throw new Error('Method not implemented.');
+  }
+  _viewCompany: any;
 }

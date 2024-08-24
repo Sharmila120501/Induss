@@ -18,9 +18,40 @@
             type="email"
             id="email"
             formControlName="companyEmail"
+            #email
+            (change)="verifyEmail(email.value)"
             placeholder="name@gmail.com"
+            [ngClass]="{
+              success: isVerfied === 200,
+              error1: isVerfied === 400
+            }"
             class="w-full px-4 py-2 border font-contentFont rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
           />
+        </div>
+        <small *ngIf="isVerfied === 400" class=""
+          ><span #incorrect class="text-red-600">User Id Incorrect</span>
+        </small>
+        <div class="mt-2 flex items-center gap-2" *ngIf="isVerfied === 200">
+          <svg
+            class="w-4 text-blue-600 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+
+          <!-- <iframe src="https://lottie.host/embed/7768fbf2-5be6-42ce-8778-647735aa206f/0gLuxEMDzd.json"></iframe> -->
+          <small class=""
+            ><span #incorrect class="text-blue-600">Verified User </span>
+          </small>
         </div>
         <div class="mb-4">
           <label for="password" class="block font-contentFont text-gray-700"
@@ -28,6 +59,10 @@
           >
           <input
             type="password"
+            [ngClass]="{
+              error1: passwordVerified === 1,
+              'disabled-field': !passwordEnabled
+            }"
             id="password"
             formControlName="password"
             placeholder="********"

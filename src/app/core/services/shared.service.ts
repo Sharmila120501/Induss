@@ -8,6 +8,9 @@ import { endPonit } from '../../../environments/environment.apifile';
 export class SharedService {
   constructor(private http: HttpClient) {}
 
+  public email: any;
+  public companyData: any;
+
   getPincode(pin: any) {
     return this.http.get(endPonit.pincode, pin);
   }

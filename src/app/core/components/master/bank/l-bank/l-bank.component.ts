@@ -7,6 +7,8 @@ import { BankService } from '../../../../services/bank.service';
   styleUrl: './l-bank.component.css',
 })
 export class LBankComponent implements OnInit {
+  isCloseUpdate: boolean = false;
+  bankData: any;
   constructor(private bankservice: BankService) {}
 
   _bankList: any;
@@ -24,5 +26,13 @@ export class LBankComponent implements OnInit {
       console.log(res);
       this._bankList = res;
     });
+  }
+  viewBank(data: any) {
+    this.isCloseUpdate = true;
+    this.bankData = data;
+  }
+
+  closeUpdate(close: any) {
+    this.isCloseUpdate = close;
   }
 }
